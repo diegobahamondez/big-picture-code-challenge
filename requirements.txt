@@ -2,3 +2,4 @@ Django==3.2.12
 isbnlib==3.10.14
 requests==2.31.0
 python-dotenv==0.19.2
+bs4==0.0.2
