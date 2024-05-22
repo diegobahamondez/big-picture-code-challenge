@@ -21,7 +21,7 @@ def fetch_book_from_api(isbn: str) -> Union[dict, None]:
         response.raise_for_status()
         data = response.json()
         if "records" in data and data["records"]:
-            return list(data["records"].values())[0]["data"]
+            return list(data["records"].values())[0]
     except requests.RequestException as e:
         print(f"Error fetching book data: {e}")
     return None
@@ -30,12 +30,17 @@ def fetch_book_from_api(isbn: str) -> Union[dict, None]:
 def error_response(message: str, status: int = 400) -> JsonResponse:
     return JsonResponse({"error": message}, status=status)
 
+def get_summary(book_data: dict):
+    summary = book_data["details"].get("details", {}).get("description", "no description")
+    if isinstance(summary, dict):
+        summary = summary.get("value", "no description")
+    return summary
 
 def get_book_details_from_data(book_data: dict, isbn: str) -> dict:
     return {
         "isbn": isbn,
-        "title": book_data.get("title", "Unknown Title"),
-        "author": book_data.get("authors", [{}])[0].get("name", "Unknown Author"),
-        "summary": book_data.get("notes", ""),
-        "cover_url": book_data.get("cover", {}).get("medium", ""),
-    }
+        "title": book_data["data"].get("title", "Unknown Title"),
+        "author": book_data["data"].get("authors", [{}])[0].get("name", "Unknown Author"),
+        "summary": get_summary(book_data),
+        "cover_url": book_data["data"].get("cover", {}).get("medium", ""),
+        }
