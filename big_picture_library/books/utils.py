@@ -1,9 +1,10 @@
 import requests
 
-# there are several methods for validating ISBN, including creating your own algorithms. But from what
-# I've learned I can say: The less code you have to mantain, the better for the project.
-# I also checked the github of this library and performs well without any issues.
+# there are several methods for validating ISBN, including creating your own algorithms.
+# But i think the less code you have to mantain, the better for the project.
+# I also checked the github of this library (isbnlib) and performs well without any issues.
 from isbnlib import is_isbn10, is_isbn13
+
 from typing import Union
 
 from bs4 import BeautifulSoup
