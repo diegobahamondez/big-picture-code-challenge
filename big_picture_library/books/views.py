@@ -17,7 +17,7 @@ from .utils import (
 
 class FetchBookDetailsView(View):
 
-    def get(self, isbn: str) -> JsonResponse:
+    def get(self, request, isbn: str, *args, **kwargs) -> JsonResponse:
         if not validate_isbn(isbn):
             return error_response("Invalid ISBN")
 
@@ -32,7 +32,7 @@ class FetchBookDetailsView(View):
 @method_decorator(csrf_exempt, name="dispatch")
 class BookView(View):
 
-    def post(self, request) -> JsonResponse:
+    def post(self, request, *args, **kwargs) -> JsonResponse:
         try:
             body = json.loads(request.body)
         except json.JSONDecodeError:
@@ -64,7 +64,7 @@ class BookView(View):
         status_code = 201 if created else 200
         return JsonResponse(book_details, status=status_code)
 
-    def get(self) -> JsonResponse:
+    def get(self, request, *args, **kwargs) -> JsonResponse:
         books = list(
             Book.objects.values("isbn", "title", "author", "summary", "cover_url")
         )
