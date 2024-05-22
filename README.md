@@ -4,11 +4,20 @@
 
 www.python.org
 
+## create virtual environment
+
+- python3 -m venv venv
+- source venv/bin/activate # On Windows use `venv\Scripts\activate`
+
 ## install Django and dependencies
 
 pip install -r requirements.txt
 
-## setup database migrations
+## change to project directory
+
+cd big_picture_library
+
+## setup database migrations (using sqlite for simplicity)
 
 python manage.py makemigrations
 
@@ -17,4 +26,5 @@ python manage.py makemigrations
 python manage.py migrate
 
 ## run the server
+
 python manage.py runserver
