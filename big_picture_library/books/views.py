@@ -7,11 +7,16 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Book
-from .utils import validate_isbn, fetch_book_from_api, error_response, get_book_details_from_data
+from .utils import (
+    validate_isbn,
+    fetch_book_from_api,
+    error_response,
+    get_book_details_from_data,
+)
 
 
 class FetchBookDetailsView(View):
-    
+
     def get(self, request, isbn: str, *args, **kwargs) -> JsonResponse:
         if not validate_isbn(isbn):
             return error_response("Invalid ISBN")
@@ -24,7 +29,7 @@ class FetchBookDetailsView(View):
         return JsonResponse(book_details)
 
 
-@method_decorator(csrf_exempt, name='dispatch')
+@method_decorator(csrf_exempt, name="dispatch")
 class BookView(View):
 
     def post(self, request, *args, **kwargs) -> JsonResponse:
@@ -52,13 +57,15 @@ class BookView(View):
                 "title": book_details["title"],
                 "author": book_details["author"],
                 "summary": book_details["summary"],
-                "cover_url": book_details["cover_url"]
-            }
+                "cover_url": book_details["cover_url"],
+            },
         )
 
         status_code = 201 if created else 200
         return JsonResponse(book_details, status=status_code)
 
     def get(self, request, *args, **kwargs) -> JsonResponse:
-        books = list(Book.objects.values("isbn", "title", "author", "summary", "cover_url"))
+        books = list(
+            Book.objects.values("isbn", "title", "author", "summary", "cover_url")
+        )
         return JsonResponse(books, safe=False)
