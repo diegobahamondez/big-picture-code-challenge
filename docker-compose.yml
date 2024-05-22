@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: python3 big_picture_library/manage.py runserver
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
