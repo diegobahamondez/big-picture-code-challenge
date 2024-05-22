@@ -29,6 +29,8 @@ SECRET_KEY = 'django-insecure-si(gtg2_=*z$s$9!t^17^8brnm-7s8myd7@=!t#a)ldgetzo6(
 
 DEBUG = os.getenv("DEBUG", "0")
 
+OPEN_LIBRARY_API_URL = os.getenv('OPEN_LIBRARY_API_URL', 'https://openlibrary.org/api/volumes/brief/isbn')
+
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS").split(",") # as delimited in .env file
 
 
