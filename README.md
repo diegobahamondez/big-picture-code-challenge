@@ -1,21 +1,20 @@
-## How to run this code:
+# How to run this code:
 
-# install python
+## install python
 
 www.python.org
 
-# install Django and dependencies
+## install Django and dependencies
 
-pip install django
-pip install isbnlib
-pip install requests
-pip install python-dotenv
-pip install bs4
+pip install -r requirements.txt
 
-# setup database (just using sqlite for simplicity)
+## setup database migrations
 
 python manage.py makemigrations
+
+## implement the migrations
+
 python manage.py migrate
 
-# run the server
+## run the server
 python manage.py runserver
